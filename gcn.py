@@ -1,7 +1,10 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from torch.optim import Adam
 from torch_geometric.nn import GCNConv
+
+from datasets import get_planetoid_dataset
 
 
 class GCN(nn.Module):
@@ -18,3 +21,12 @@ class GCN(nn.Module):
         x = F.dropout(x, p=self.dropout, training=self.training)
         x = self.gc2(x, edge_index)
         return F.log_softmax(x, dim=1)
+
+
+def create_gcn_model(data_name, nhid=16, dropout=0.5,
+                     lr=0.01, weight_decay=5e-4):
+    dataset = get_planetoid_dataset(data_name, True)
+    model = GCN(dataset, nhid, dropout)
+    optimizer = Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
+
+    return dataset, model, optimizer
