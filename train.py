@@ -30,8 +30,24 @@ def evaluate(model, data):
     return outputs
 
 
-def run(model, data, optimizer, epochs=200, early_stopping=True, patience=10):
+def run(dataset, model, optimizer, epochs=200, early_stopping=True, patience=10):
+    data = dataset[0]
+
+    # for early stopping
+    best_val_loss = float('inf')
+    counter = 0
     for epoch in range(1, epochs+1):
         train(model, optimizer, data)
-        evaluate(model, data)
+        evals = evaluate(model, data)
 
+        if early_stopping:
+            if evals['val_loss'] < best_val_loss:
+                best_val_loss = evals['val_loss']
+                counter = 0
+            else:
+                counter += 1
+            if counter >= patience:
+                print("Stop training")
+                break
+    for met, val in evals.items():
+        print(met, val)
