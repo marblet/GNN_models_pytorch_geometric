@@ -8,6 +8,10 @@
   - [Graph Attention Networks](https://arxiv.org/abs/1710.10903)
   - Petar Veličković, Guillem Cucurull, Arantxa Casanova, Adriana Romero, Pietro Liò, Yoshua Bengio
   - ICLR 2018
+- SGC
+  - [Simplifying Graph Convolutional Networks](https://arxiv.org/abs/1902.07153)
+  - Felix Wu, Tianyi Zhang, Amauri Holanda de Souza Jr., Christopher Fifty, Tao Yu, Kilian Q. Weinberger
+  - ICML 2019
 - Masked GCN
   - [Masked Graph Convolutional Network](https://www.ijcai.org/proceedings/2019/565)
   - Liang Yang, Fan Wu, Yingkui Wang, Junhua Gu, Yuanfang Guo
