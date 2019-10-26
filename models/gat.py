@@ -15,6 +15,10 @@ class GAT(nn.Module):
                            heads=output_heads, dropout=dropout)
         self.dropout = dropout
 
+    def reset_parameters(self):
+        self.gc1.reset_parameters()
+        self.gc2.reset_parameters()
+
     def forward(self, data):
         x, edge_index = data.x, data.edge_index
         x = F.dropout(x, p=self.dropout, training=self.training)

@@ -1,6 +1,8 @@
 import torch
 import torch.nn.functional as F
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 
 def train(model, optimizer, data):
     model.train()
@@ -32,6 +34,13 @@ def evaluate(model, data):
 
 def run(dataset, model, optimizer, epochs=200, early_stopping=True, patience=10, verbose=False):
     data = dataset[0]
+
+    # for GPU
+    data = data.to(device)
+    model.to(device).reset_parameters()
+
+    if torch.cuda.is_available():
+        torch.cuda.synchronize()
 
     # for early stopping
     best_val_loss = float('inf')

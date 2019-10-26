@@ -13,6 +13,10 @@ class GCN(nn.Module):
         self.gc2 = GCNConv(nhid, dataset.num_classes)
         self.dropout = dropout
 
+    def reset_parameters(self):
+        self.gc1.reset_parameters()
+        self.gc2.reset_parameters()
+
     def forward(self, data):
         x, edge_index = data.x, data.edge_index
         x = self.gc1(x, edge_index)

@@ -1,3 +1,4 @@
+import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -8,13 +9,15 @@ from torch_geometric.utils import add_self_loops, degree
 
 from datasets import get_planetoid_dataset
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
 
 def mask_features(x, edge_index, edge_weight, sigma):
     source, target = edge_index
     h_s, h_t = x[source], x[target]
     h = (h_t - h_s) / sigma
     h = edge_weight.view(-1, 1) * h * h
-    mask = torch.zeros(x.size())
+    mask = torch.zeros(x.size(), device=device)
     mask.index_add_(0, source, h)
     deg = degree(edge_index[0])
     mask = torch.exp(- mask / deg.view(-1, 1))
@@ -25,8 +28,11 @@ def mask_features(x, edge_index, edge_weight, sigma):
 class MaskedGCNConv(GCNConv):
     def __init__(self, in_channels, out_channels):
         super(MaskedGCNConv, self).__init__(in_channels, out_channels)
-        self.sigma = Parameter(torch.zeros(1, in_channels))
+        self.sigma = Parameter(torch.Tensor(1, in_channels))
         nn.init.xavier_uniform_(self.sigma.data, gain=1.414)
+
+    def reset_parameters(self):
+        super().reset_parameters()
 
     def forward(self, x, edge_index, edge_weight=None):
         if not self.cached or self.cached_result is None:
@@ -46,6 +52,10 @@ class MaskedGCN(nn.Module):
         self.gc1 = MaskedGCNConv(dataset.num_features, nhid)
         self.gc2 = MaskedGCNConv(nhid, dataset.num_classes)
         self.dropout = dropout
+
+    def reset_parameters(self):
+        self.gc1.reset_parameters()
+        self.gc2.reset_parameters()
 
     def forward(self, data):
         x, edge_index = data.x, data.edge_index
