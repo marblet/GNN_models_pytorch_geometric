@@ -64,4 +64,5 @@ def run(dataset, model, optimizer, epochs=200, early_stopping=True, patience=10,
                 break
     for met, val in evals.items():
         print(met, val)
+
     return evals
