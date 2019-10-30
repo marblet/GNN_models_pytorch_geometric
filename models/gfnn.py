@@ -19,6 +19,7 @@ class GFNN(nn.Module):
     def forward(self, data):
         x, edge_index = data.x, data.edge_index
         x = self.gc1(x, edge_index)
+        x = F.relu(x)
         x = self.fc1(x)
         return F.log_softmax(x, dim=1)
 
