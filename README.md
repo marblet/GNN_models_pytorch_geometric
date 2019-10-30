@@ -12,6 +12,10 @@
   - [Simplifying Graph Convolutional Networks](https://arxiv.org/abs/1902.07153)
   - Felix Wu, Tianyi Zhang, Amauri Holanda de Souza Jr., Christopher Fifty, Tao Yu, Kilian Q. Weinberger
   - ICML 2019
+- gfNN
+  - [Revisiting Graph Neural Networks: All We Have is Low-Pass Filters](https://arxiv.org/abs/1905.09550)
+  - Hoang NT, Takanori Maehara
+  - arXiv 2019
 - Masked GCN
   - [Masked Graph Convolutional Network](https://www.ijcai.org/proceedings/2019/565)
   - Liang Yang, Fan Wu, Yingkui Wang, Junhua Gu, Yuanfang Guo
