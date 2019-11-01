@@ -80,5 +80,5 @@ def run(dataset, model, optimizer, epochs=200, iter=100, early_stopping=True, pa
     return {
         'val_acc': mean(val_acc_list),
         'test_acc': mean(test_acc_list),
-        'test_acc_list': std(test_acc_list)
+        'test_acc_std': std(test_acc_list)
     }
