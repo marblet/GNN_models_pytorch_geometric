@@ -4,7 +4,6 @@ from math import log
 from torch.optim import Adam
 
 from train import run
-from models.sgc import create_sgc_model
 
 
 def objective(dataset, model, lr, space):
