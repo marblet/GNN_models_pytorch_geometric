@@ -1,4 +1,4 @@
-# GNN_models_pytorch
+# GNN_models_pytorch_geometric
 
 - GCN
   - [Semi-Supervised Classification with Graph Convolutional Networks](https://arxiv.org/abs/1609.02907)
