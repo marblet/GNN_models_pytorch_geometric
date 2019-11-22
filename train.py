@@ -39,7 +39,6 @@ def run(dataset, model, optimizer, epochs=200, iter=100, early_stopping=True, pa
 
     # for GPU
     data = data.to(device)
-    model.to(device).reset_parameters()
 
     if torch.cuda.is_available():
         torch.cuda.synchronize()
@@ -49,6 +48,7 @@ def run(dataset, model, optimizer, epochs=200, iter=100, early_stopping=True, pa
 
     for _ in tqdm(range(iter)):
         # for early stopping
+        model.to(device).reset_parameters()
         best_val_loss = float('inf')
         counter = 0
         for epoch in range(1, epochs+1):
