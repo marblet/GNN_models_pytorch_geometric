@@ -19,6 +19,7 @@ class GCN(nn.Module):
 
     def forward(self, data):
         x, edge_index = data.x, data.edge_index
+        x = F.dropout(x, p=self.dropout, training=self.training)
         x = self.gc1(x, edge_index)
         x = F.relu(x)
         x = F.dropout(x, p=self.dropout, training=self.training)
